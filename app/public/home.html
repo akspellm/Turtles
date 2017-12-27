@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Friend Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://bootswatch.com/4/minty/bootstrap.min.css'>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="/assets/turtles.js"></script>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1 class="display-3">Turtle App!</h1>
+        <p class="lead">Our super sophisticated and relevant app to keep track of the stats of all of your favorite turtles!</p>
+        <hr class="my-4">
+        <h2>Enter a new Turtle below</h2>
+        <br>
+        <h3>OR</h3>
+        <br>
+        <p class="lead">
+            <a id="show-turtles" class="btn btn-primary btn-lg submit" href="#" role="button">Show Me My Turtles!</a>
+        </p>
+    </div>
+
+    <div class='container'>
+        <form>
+            <div class="form-group">
+                <label for="turtle-name">Name of New Turtle</label>
+                <input type="text" class="form-control" id="turtle-name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="turtle-food">New Turtle's Fave Food</label>
+                <input type="text" class="form-control" id="turtle-food" placeholder="Fave Food">
+            </div>
+            <button id="add-turtle" type="submit" class="btn btn-primary">Add Turtle!</button>
+        </form>
+    </div>
+
+
+
+    <script>
+
+        $('#show-turtles').on('click', function (event) {
+            event.preventDefault();
+            location.replace('/turtles')
+        });
+
+        $('#add-turtle').on('click', function (event) {
+            event.preventDefault();
+
+            var newTurtle = {
+                name: $("#turtle-name").val().trim(),
+                favFood: $("#turtle-food").val().trim()
+            };
+
+            $.post("/api/turtles", newTurtle, function (data) {
+                if (data) {
+                    console.log('added');
+                    alert("Yay! Turtle was added!");
+                }
+
+                else {
+                    alert("Oh no! Something went wrong!")
+                }
+
+                $("#turtle-name").val("");
+                $("#turtle-food").val("");
+
+            })
+        })
+    </script>
+</body>
+
+</html>
